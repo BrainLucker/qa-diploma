@@ -8,24 +8,24 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ./data:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=app
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=pass
 
-#  postgres:
-#    image: postgres:12-alpine
-#    restart: always
-#    ports:
-#      - '5432:5432'
-#    volumes:
-#      - ./data:/var/lib/postgresql/data
-#    environment:
-#      - POSTGRES_DB=app
-#      - POSTGRES_USER=admin
-#      - POSTGRES_PASSWORD=12345
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pass
 
   node:
     image: "node:8"
