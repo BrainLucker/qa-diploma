@@ -2,7 +2,6 @@ package ru.netology.shop.data;
 
 import com.github.javafaker.CreditCardType;
 import com.github.javafaker.Faker;
-import lombok.Setter;
 import lombok.Value;
 
 import java.time.LocalDate;
@@ -18,11 +17,6 @@ public class DataGenerator {
 
     public static String generateDeclinedCardNumber() {
         return "4444 4444 4444 4442";
-    }
-
-    public static String generateInvalidCardNumber() {
-        var faker = new Faker(new Locale("en"));
-        return faker.finance().creditCard(CreditCardType.VISA).replace("-", " ");
     }
 
     private static LocalDate getDate(int yearsToAdd, int monthToAdd) {
@@ -60,28 +54,48 @@ public class DataGenerator {
         private Cards() {
         }
 
-        public static CardInfo newCardInfo(String cardNumber, LocalDate cardDate) {
+        private static CardInfo generateCardInfo(String cardNumber, LocalDate cardDate) {
             return new CardInfo(cardNumber, getYear(cardDate), getMonth(cardDate), generateHolder(), generateCode());
         }
 
         public static CardInfo generateValidApprovedCard() {
-            return newCardInfo(generateApprovedCardNumber(), generateValidCardDate());
+            return generateCardInfo(generateApprovedCardNumber(), generateValidCardDate());
         }
 
         public static CardInfo generateValidDeclinedCard() {
-            return newCardInfo(generateDeclinedCardNumber(), generateValidCardDate());
+            return generateCardInfo(generateDeclinedCardNumber(), generateValidCardDate());
         }
 
         public static CardInfo generateApprovedCardExpiringIn(int years, int months) {
-            return newCardInfo(generateApprovedCardNumber(), getDate(years,months));
+            return generateCardInfo(generateApprovedCardNumber(), getDate(years, months));
         }
 
-        public static CardInfo generateCardWithInvalidNumber() {
-            return newCardInfo(generateInvalidCardNumber(), generateValidCardDate());
+        public static CardInfo generateCardAndSetNumber(String number) {
+            var cardDate = generateValidCardDate();
+            return new CardInfo(number, getYear(cardDate), getMonth(cardDate), generateHolder(), generateCode());
+        }
+
+        public static CardInfo generateCardAndSetYear(String year) {
+            var cardDate = generateValidCardDate();
+            return new CardInfo(generateApprovedCardNumber(), year, getMonth(cardDate), generateHolder(), generateCode());
+        }
+
+        public static CardInfo generateCardAndSetMonth(String month) {
+            var cardDate = generateValidCardDate();
+            return new CardInfo(generateApprovedCardNumber(), getYear(cardDate), month, generateHolder(), generateCode());
+        }
+
+        public static CardInfo generateCardAndSetHolder(String holder) {
+            var cardDate = generateValidCardDate();
+            return new CardInfo(generateApprovedCardNumber(), getYear(cardDate), getMonth(cardDate), holder, generateCode());
+        }
+
+        public static CardInfo generateCardAndSetCode(String code) {
+            var cardDate = generateValidCardDate();
+            return new CardInfo(generateApprovedCardNumber(), getYear(cardDate), getMonth(cardDate), generateHolder(), code);
         }
     }
 
-    @Setter
     @Value
     public static class CardInfo {
         String number;

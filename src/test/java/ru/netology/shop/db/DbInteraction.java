@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import ru.netology.shop.mode.Order;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,14 +15,14 @@ public class DbInteraction {
     private final String password = "pass";
     private final String paymentTable = "payment_entity";
     private final String creditTable = "credit_request_entity";
-    private final String interval = "now() - interval '30 seconds'";
+    private final String interval = "now() - interval '5 seconds'";
 
     @SneakyThrows
     private Connection getConnection() {
         return DriverManager.getConnection(url, user, password);
     }
 
-    @Step("Получаем статус покупки из {0}")
+    @Step("Получаем статус покупки из «{0}»")
     @SneakyThrows
     private String getStatus(String table) {
         var statusSQL = "SELECT status FROM " + table +
@@ -41,7 +42,7 @@ public class DbInteraction {
         return getStatus(creditTable);
     }
 
-    @Step("Получаем сумму оплаты из {paymentTable}")
+    @Step("Получаем сумму оплаты из таблицы «" + paymentTable + "»")
     @SneakyThrows
     public int getPaymentAmount() {
         var amountSQL = "SELECT amount/100 FROM " + paymentTable +
@@ -53,7 +54,7 @@ public class DbInteraction {
         }
     }
 
-    @Step("Получаем id заказа в таблице «order_entity» для покупки из «{0}»")
+    @Step("Получаем id заказа из таблицы «order_entity», связанного с оплатой из таблицы «{0}»")
     @SneakyThrows
     private String getOrderId(String table, String joinOnColumns) {
         var orderIdSQL = "SELECT oe.id FROM " + table +
@@ -72,5 +73,13 @@ public class DbInteraction {
 
     public String getCreditOrderId() {
         return getOrderId(creditTable, "bank_id = credit_id");
+    }
+
+    public Order getPaymentOrder() {
+        return new Order(getPaymentOrderId(), getPaymentStatus(), getPaymentAmount());
+    }
+
+    public Order getCreditOrder() {
+        return new Order(getCreditOrderId(), getCreditStatus(), 0);
     }
 }
