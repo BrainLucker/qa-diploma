@@ -1,8 +1,8 @@
 package ru.netology.shop.page;
 
 public class ElementsTexts {
-    public static class Headers {
-        private Headers() {
+    public static class Headings {
+        private Headings() {
         }
 
         public static final String tourOfTheDay = "Путешествие дня";
@@ -13,6 +13,7 @@ public class ElementsTexts {
     public static class Buttons {
         private Buttons() {
         }
+
         public static final String buy = "Купить";
         public static final String credit = "Купить в кредит";
         public static final String submit = "Продолжить";
@@ -36,5 +37,4 @@ public class ElementsTexts {
         public static final String invalidInputDateError = "Неверно указан срок действия карты";
         public static final String expiredDateError = "Истёк срок действия карты";
     }
-
 }

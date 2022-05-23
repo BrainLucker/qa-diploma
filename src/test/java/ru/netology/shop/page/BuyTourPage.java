@@ -13,7 +13,7 @@ import static ru.netology.shop.page.ElementsTexts.Notifications;
 import static ru.netology.shop.page.ElementsTexts.Buttons;
 
 public class BuyTourPage {
-    private final SelenideElement heading = $("div[id=root] > div > h3.heading");
+    final SelenideElement heading = $("div[id=root] > div > h3.heading");
     private final SelenideElement form = $("form fieldset");
     // *** Селекторы элементов формы ***
     private final SelenideElement numberField = findFieldByText("Номер карты");
@@ -21,14 +21,10 @@ public class BuyTourPage {
     private final SelenideElement yearField = findFieldByText("Год");
     private final SelenideElement holderField = findFieldByText("Владелец");
     private final SelenideElement codeField = findFieldByText("CVC/CVV");
-    private final SelenideElement button = form.$$("button.button").findBy(text(Buttons.submit));
+    private final SelenideElement continueButton = form.$("button.button");
     // *** Селекторы всплывающих сообщений ***
     private final SelenideElement notificationOk = $(".notification_status_ok");
     private final SelenideElement notificationError = $(".notification_status_error");
-
-    public BuyTourPage(String headingText) {
-        heading.shouldBe(visible).shouldHave(text(headingText));
-    }
 
     private SelenideElement findFieldByText(String fieldName) {
         return form.$x(".//span[@class='input__top'][contains(text(),'" + fieldName + "')]//..");
@@ -62,7 +58,7 @@ public class BuyTourPage {
 
     @Step("Нажимаем на кнопку «Продолжить»")
     public void clickButton() {
-        button.click();
+        continueButton.shouldHave(text(Buttons.submit), Duration.ofMillis(30)).click();
     }
 
     public void inputCardInfoAndSubmit(DataGenerator.CardInfo cardInfo) {
@@ -77,32 +73,32 @@ public class BuyTourPage {
     // *** Проверки состояния кнопки подтверждения ***
     @Step("Проверяем изменение текста кнопки и появление иконки загрузки")
     public void checkButtonIsLoading() {
-        button.shouldHave(cssClass("button_disabled"), Duration.ofMillis(30));
-        button.$(".button__text").shouldHave(text(Buttons.loading), Duration.ofMillis(30));
-        button.$(".button__text .spin").shouldBe(visible, Duration.ofMillis(30));
+        continueButton.shouldHave(cssClass("button_disabled"), Duration.ofMillis(30));
+        continueButton.$(".button__text").shouldHave(text(Buttons.loading), Duration.ofMillis(30));
+        continueButton.$(".button__text .spin").shouldBe(visible, Duration.ofMillis(30));
     }
 
     @Step("Проверяем неизменность текста кнопки и отсутствие иконки загрузки")
     public void checkButtonIsNormal() {
-        button.shouldNotHave(cssClass("button_disabled"), Duration.ofMillis(30));
-        button.$(".button__text").shouldHave(text(Buttons.submit), Duration.ofMillis(30));
-        button.$(".button__text .spin").shouldNotBe(visible, Duration.ofMillis(30));
+        continueButton.shouldNotHave(cssClass("button_disabled"), Duration.ofMillis(30));
+        continueButton.$(".button__text").shouldHave(text(Buttons.submit), Duration.ofMillis(30));
+        continueButton.$(".button__text .spin").shouldNotBe(visible, Duration.ofMillis(30));
     }
 
     // *** Проверки сообщений о результате ***
     @Step("Проверяем появилось ли сообщение с результатом «{title}»")
-    public void checkNotification(SelenideElement notification, String title, String content) {
-        notification.shouldBe(visible, Duration.ofSeconds(10));
+    public void checkNotification(SelenideElement notification, int loadingTimeInSeconds, String title, String content) {
+        notification.shouldBe(visible, Duration.ofSeconds(loadingTimeInSeconds));
         notification.$(".notification__title").shouldHave(text(title));
         notification.$(".notification__content").shouldHave(text(content));
     }
 
-    public void checkOkNotification() {
-        checkNotification(notificationOk, Notifications.ok[0], Notifications.ok[1]);
+    public void checkOkNotification(int waitingTimeInSeconds) {
+        checkNotification(notificationOk, waitingTimeInSeconds, Notifications.ok[0], Notifications.ok[1]);
     }
 
-    public void checkErrorNotification() {
-        checkNotification(notificationError, Notifications.error[0], Notifications.error[1]);
+    public void checkErrorNotification(int loadingTimeInSeconds) {
+        checkNotification(notificationError, loadingTimeInSeconds, Notifications.error[0], Notifications.error[1]);
     }
 
     // *** Проверки ошибок заполнения полей ***
@@ -138,8 +134,11 @@ public class BuyTourPage {
     // *** Проверка допустимой длины полей ***
     @Step("Получаем допустимую длину поля")
     private int getFieldMaxLength(SelenideElement field) {
-        return Integer.parseInt(Objects.requireNonNull(
-                field.$("input.input__control").getAttribute("maxlength")));
+        var maxLength =
+                field.$("input.input__control")
+                        .shouldHave(attribute("maxlength"), Duration.ofMillis(10))
+                        .getAttribute("maxlength");
+        return Integer.parseInt(maxLength);
     }
 
     public int getNumberFieldMaxLength() {

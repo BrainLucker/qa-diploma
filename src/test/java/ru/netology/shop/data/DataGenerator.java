@@ -1,13 +1,12 @@
 package ru.netology.shop.data;
 
-import com.github.javafaker.CreditCardType;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Locale;
 
 public class DataGenerator {
 
@@ -40,8 +39,8 @@ public class DataGenerator {
 
     public static String generateHolder() {
         var faker = new Faker(new Locale("en"));
-        var randomFirstName = faker.name().firstName().toUpperCase();
-        var randomLastName = faker.name().lastName().toUpperCase();
+        var randomFirstName = faker.name().firstName();
+        var randomLastName = faker.name().lastName();
         return randomFirstName + " " + randomLastName;
     }
 

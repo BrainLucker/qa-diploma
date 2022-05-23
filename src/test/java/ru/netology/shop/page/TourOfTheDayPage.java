@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-import static ru.netology.shop.page.ElementsTexts.Headers;
+import static ru.netology.shop.page.ElementsTexts.Headings;
 import static ru.netology.shop.page.ElementsTexts.Buttons;
 
 public class TourOfTheDayPage {
@@ -17,7 +17,7 @@ public class TourOfTheDayPage {
     private final SelenideElement StringWithPrice = $$("ul li.list__item").findBy(text("руб."));
 
     public TourOfTheDayPage() {
-        heading.shouldBe(visible).shouldHave(text(Headers.tourOfTheDay));
+        heading.shouldBe(visible).shouldHave(text(Headings.tourOfTheDay));
     }
 
     public void pressButton(String text) {

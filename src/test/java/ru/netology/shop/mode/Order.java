@@ -20,6 +20,12 @@ public class Order {
         this.amount = amount;
     }
 
+    public Order(String status) {
+        this.id = "1";
+        this.status = status;
+        this.amount = 0;
+    }
+
     @Step("Проверяем, что заказ внесен в БД корректно, его статус «{expectedOrder.status}», а сумма {expectedOrder.amount}.")
     public void assertPaymentOrder(Order expectedOrder) {
         assertEquals(expectedOrder.getStatus(), this.status);

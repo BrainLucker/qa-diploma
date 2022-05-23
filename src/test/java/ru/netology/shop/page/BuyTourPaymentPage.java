@@ -1,10 +1,12 @@
 package ru.netology.shop.page;
 
-import static ru.netology.shop.page.ElementsTexts.Headers;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static ru.netology.shop.page.ElementsTexts.Headings;
 
 public class BuyTourPaymentPage extends BuyTourPage {
 
     public BuyTourPaymentPage() {
-        super(Headers.payment);
+        heading.shouldBe(visible).shouldHave(text(Headings.payment));
     }
 }
