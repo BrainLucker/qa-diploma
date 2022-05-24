@@ -24,7 +24,7 @@ public class ElementsTexts {
         private Notifications() {
         }
 
-        public static final String[] ok = {"Успешно", "Операция одобрена Банком."};
+        public static final String[] success = {"Успешно", "Операция одобрена Банком."};
         public static final String[] error = {"Ошибка", "Ошибка! Банк отказал в проведении операции."};
     }
 
@@ -33,8 +33,8 @@ public class ElementsTexts {
         }
 
         public static final String emptyField = "Поле обязательно для заполнения";
-        public static final String invalidInputField = "Неверный формат";
-        public static final String invalidInputDateError = "Неверно указан срок действия карты";
-        public static final String expiredDateError = "Истёк срок действия карты";
+        public static final String incorrectFormat = "Неверный формат";
+        public static final String incorrectExpirationDate = "Неверно указан срок действия карты";
+        public static final String expiredDate = "Истёк срок действия карты";
     }
 }

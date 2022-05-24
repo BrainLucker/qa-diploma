@@ -1,4 +1,4 @@
-package ru.netology.shop.mode;
+package ru.netology.shop.db;
 
 import io.qameta.allure.Step;
 import lombok.AllArgsConstructor;

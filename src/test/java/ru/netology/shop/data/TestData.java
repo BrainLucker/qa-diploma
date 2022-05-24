@@ -20,22 +20,22 @@ public class TestData {
 
     public static Stream<Arguments> notAllowableMonths() {
         return Stream.of(
-                arguments(0, -1, Errors.expiredDateError),
-                arguments(5, 1, Errors.invalidInputDateError)
+                arguments(0, -1, Errors.expiredDate),
+                arguments(5, 1, Errors.incorrectExpirationDate)
         );
     }
 
     public static Stream<Arguments> notAllowableYears() {
         return Stream.of(
-                arguments(-1, 0, Errors.expiredDateError),
-                arguments(6, 0, Errors.invalidInputDateError)
+                arguments(-1, 0, Errors.expiredDate),
+                arguments(6, 0, Errors.incorrectExpirationDate)
         );
     }
 
     public static Stream<Arguments> invalidCardNumbers() {
         return Stream.of(
-                arguments("1111 1111 1111 1111", Errors.invalidInputField),
-                arguments("4444 4444 4444 444", Errors.invalidInputField),
+                arguments("1111 1111 1111 1111", Errors.incorrectFormat),
+                arguments("4444 4444 4444 444", Errors.incorrectFormat),
                 arguments("Look like card nmbr", Errors.emptyField),
                 arguments(".... ,,,, **** ----", Errors.emptyField),
                 arguments("                ", Errors.emptyField),
@@ -45,9 +45,9 @@ public class TestData {
 
     public static Stream<Arguments> invalidMonths() {
         return Stream.of(
-                arguments("00", Errors.invalidInputDateError),
-                arguments("13", Errors.invalidInputDateError),
-                arguments("1", Errors.invalidInputField),
+                arguments("00", Errors.incorrectExpirationDate),
+                arguments("13", Errors.incorrectExpirationDate),
+                arguments("1", Errors.incorrectFormat),
                 arguments("mo", Errors.emptyField),
                 arguments(".,", Errors.emptyField),
                 arguments("  ", Errors.emptyField),
@@ -57,9 +57,9 @@ public class TestData {
 
     public static Stream<Arguments> invalidYears() {
         return Stream.of(
-                arguments("00", Errors.expiredDateError),
-                arguments("99", Errors.invalidInputDateError),
-                arguments("1", Errors.invalidInputField),
+                arguments("00", Errors.expiredDate),
+                arguments("99", Errors.incorrectExpirationDate),
+                arguments("1", Errors.incorrectFormat),
                 arguments("ye", Errors.emptyField),
                 arguments(".,", Errors.emptyField),
                 arguments("  ", Errors.emptyField),
@@ -69,8 +69,8 @@ public class TestData {
 
     public static Stream<Arguments> invalidHolderNames() {
         return Stream.of(
-                arguments("A", Errors.invalidInputField),
-                arguments("Too Loooong Card Holder Name", Errors.invalidInputField),
+                arguments("A", Errors.incorrectFormat),
+                arguments("Too Loooong Card Holder Name", Errors.incorrectFormat),
                 arguments("Имя Владельца", Errors.emptyField),
                 arguments("1234567890", Errors.emptyField),
                 arguments("!@#$%^&№;%:?*()-+/\\", Errors.emptyField),
@@ -81,7 +81,7 @@ public class TestData {
 
     public static Stream<Arguments> invalidCodes() {
         return Stream.of(
-                arguments("12", Errors.invalidInputField),
+                arguments("12", Errors.incorrectFormat),
                 arguments("xyz", Errors.emptyField),
                 arguments(".,-", Errors.emptyField),
                 arguments("   ", Errors.emptyField),
