@@ -1,6 +1,7 @@
 package ru.netology.shop.data;
 
 import com.github.javafaker.Faker;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 import java.time.LocalDate;
@@ -96,6 +97,7 @@ public class DataGenerator {
     }
 
     @Value
+    @AllArgsConstructor
     public static class CardInfo {
         String number;
         String year;
