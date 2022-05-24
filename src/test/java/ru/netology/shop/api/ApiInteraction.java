@@ -34,7 +34,7 @@ public class ApiInteraction {
         return sendRequest(creditGatePath, cardInfo, statusCode);
     }
 
-    @Step("Проверяем, что код ответа {2} и получаем статус карты")
+    @Step("Проверяем, что код ответа {2} и получаем статус")
     public String sendRequest(String path, CardInfo body, int code) {
         String status = // @formatter:off
         given()
@@ -45,7 +45,7 @@ public class ApiInteraction {
         .then()
             .statusCode(code)
         .extract()
-            .path("status")
+            .path("status").toString()
         ; // @formatter:on
         return status;
     }
