@@ -4,7 +4,6 @@ import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-import ru.netology.shop.mode.Order;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
