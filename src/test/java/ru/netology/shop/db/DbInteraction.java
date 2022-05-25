@@ -9,24 +9,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DbInteraction {
-    private final String url = "jdbc:postgresql://localhost:5432/app";
-    private final String user = "admin";
-    private final String password = "pass";
+    private static final String url = System.getProperty("db.url");
+    private static final String user = System.getProperty("db.user");
+    private static final String password = System.getProperty("db.password");
+    private final String orderTable = "order_entity";
     private final String paymentTable = "payment_entity";
     private final String creditTable = "credit_request_entity";
-    private final String interval = "now() - interval '5 seconds'";
 
     @SneakyThrows
     private Connection getConnection() {
         return DriverManager.getConnection(url, user, password);
     }
 
-    @Step("Получаем статус покупки из «{0}»")
+    @Step("Получаем статус покупки из таблицы «{0}»")
     @SneakyThrows
     private String getStatus(String table) {
-        var statusSQL = "SELECT status FROM " + table +
-                " WHERE created > " + interval +
-                " ORDER BY created DESC";
+        var statusSQL = "SELECT status FROM " + table;
 
         try (var conn = getConnection()) {
             return new QueryRunner().query(conn, statusSQL, new ScalarHandler<>());
@@ -44,25 +42,34 @@ public class DbInteraction {
     @Step("Получаем сумму оплаты из таблицы «" + paymentTable + "»")
     @SneakyThrows
     public int getPaymentAmount() {
-        var amountSQL = "SELECT amount/100 FROM " + paymentTable +
-                " WHERE created > " + interval +
-                " ORDER BY created DESC";
+        var amountSQL = "SELECT amount FROM " + paymentTable;
 
         try (var conn = getConnection()) {
-            return new QueryRunner().query(conn, amountSQL, new ScalarHandler<>());
+            int result = new QueryRunner().query(conn, amountSQL, new ScalarHandler<>());
+            return result / 100;
         }
     }
 
-    @Step("Получаем id заказа из таблицы «order_entity», связанного с оплатой из таблицы «{0}»")
+    @Step("Получаем id заказа из таблицы «" + orderTable + "», связанного с оплатой из таблицы «{0}»")
     @SneakyThrows
     private String getOrderId(String table, String joinOnColumns) {
-        var orderIdSQL = "SELECT oe.id FROM " + table +
-                " INNER JOIN order_entity oe ON " + joinOnColumns +
-                " WHERE oe.created > " + interval +
-                " ORDER BY oe.created DESC";
+        var orderIdSQL = "SELECT o.id FROM " + table +
+                " INNER JOIN " + orderTable + " o ON " + joinOnColumns;
 
         try (var conn = getConnection()) {
             return new QueryRunner().query(conn, orderIdSQL, new ScalarHandler<>());
+        }
+    }
+
+    @Step("Очищаем таблицы БД после выполнения теста")
+    @SneakyThrows
+    public void clearData() {
+        var runner = new QueryRunner();
+
+        try (var conn = getConnection()) {
+            runner.update(conn, "DELETE from " + paymentTable);
+            runner.update(conn, "DELETE from " + creditTable);
+            runner.update(conn, "DELETE from " + orderTable);
         }
     }
 
