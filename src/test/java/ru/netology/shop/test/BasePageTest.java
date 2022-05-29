@@ -19,7 +19,6 @@ public abstract class BasePageTest {
     static final DbInteraction db = new DbInteraction();
     TourOfTheDayPage tourOfTheDayPage;
     BuyTourPage buyTourPage;
-    CardInfo card;
 
     @BeforeAll
     public static void setUpAll() {
@@ -31,35 +30,36 @@ public abstract class BasePageTest {
         SelenideLogger.removeListener("allure");
     }
 
+    @AfterEach
+    public void tearDown() {
+        db.clearData();
+    }
+
     public void setup() {
         Configuration.holdBrowserOpen = true;
         Configuration.browserSize = "800x1000";
-        tourOfTheDayPage = open("http://localhost:8080", TourOfTheDayPage.class);
+        tourOfTheDayPage = open(System.getProperty("sut.url"), TourOfTheDayPage.class);
     }
 
-    public abstract void shouldBuyTourIfValidApprovedCard();
+    public abstract void shouldBuyTourIfValidCardInfo(String testName, CardInfo card);
 
-    public abstract void shouldBuyTourIfApprovedExpiringSoonCard();
-
-    public abstract void shouldBuyTourIfValidHolderName(String holderName);
-
-    public abstract void shouldChangePage();
+    public abstract void shouldChangePageIfClickButton();
 
     public abstract void shouldShowErrorIfValidDeclinedCard();
 
-    public abstract void shouldShowErrorIfInputtedMonthIsNotAllowable(int shiftYears, int shiftMonths, String errorText);
+    public abstract void shouldShowErrorIfInputtedMonthIsNotAllowable(String testName, CardInfo card, String errorText);
 
-    public abstract void shouldShowErrorIfInputtedYearIsNotAllowable(int shiftYears, int shiftMonths, String errorText);
+    public abstract void shouldShowErrorIfInputtedYearIsNotAllowable(String testName, CardInfo card, String errorText);
 
-    public abstract void shouldShowErrorIfInputtedInvalidNumber(String cardNumber, String errorText);
+    public abstract void shouldShowErrorIfInputtedInvalidNumber(String testName, CardInfo card, String errorText);
 
-    public abstract void shouldShowErrorIfInputtedInvalidMonth(String cardMonth, String errorText);
+    public abstract void shouldShowErrorIfInputtedInvalidMonth(String testName, CardInfo card, String errorText);
 
-    public abstract void shouldShowErrorIfInputtedInvalidYear(String cardYear, String errorText);
+    public abstract void shouldShowErrorIfInputtedInvalidYear(String testName, CardInfo card, String errorText);
 
-    public abstract void shouldShowErrorIfInputtedInvalidHolder(String holderName, String errorText);
+    public abstract void shouldShowErrorIfInputtedInvalidHolder(String testName, CardInfo card, String errorText);
 
-    public abstract void shouldShowErrorIfInputtedInvalidCode(String code, String errorText);
+    public abstract void shouldShowErrorIfInputtedInvalidCode(String testName, CardInfo card, String errorText);
 
     public abstract void shouldShowErrorIfSendEmptyForm();
 

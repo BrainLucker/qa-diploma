@@ -10,8 +10,8 @@ import static io.restassured.RestAssured.given;
 import static ru.netology.shop.data.DataGenerator.CardInfo;
 
 public class ApiInteraction {
-    private final static String baseUrl = "http://localhost/api/v1/";
-    private final static int port = 8080;
+    private final static String baseUrl = System.getProperty("api.url");
+    private final static int port = Integer.parseInt(System.getProperty("api.port"));
     private final String paymentGatePath = "/pay";
     private final String creditGatePath = "/credit";
 
@@ -25,16 +25,16 @@ public class ApiInteraction {
         ; // @formatter:on
 
     @Step("Отправляем POST-запрос на PaymentGate")
-    public String sendCardToPaymentGate(CardInfo cardInfo, int statusCode) {
+    public String sendCardInfoToPaymentGate(CardInfo cardInfo, int statusCode) {
         return sendRequest(paymentGatePath, cardInfo, statusCode);
     }
 
     @Step("Отправляем POST-запрос на CreditGate")
-    public String sendCardToCreditGate(CardInfo cardInfo, int statusCode) {
+    public String sendCardInfoToCreditGate(CardInfo cardInfo, int statusCode) {
         return sendRequest(creditGatePath, cardInfo, statusCode);
     }
 
-    @Step("Проверяем, что код ответа {2} и получаем статус")
+    @Step("Проверяем, что код ответа {2} и получаем статус карты")
     public String sendRequest(String path, CardInfo body, int code) {
         String status = // @formatter:off
         given()

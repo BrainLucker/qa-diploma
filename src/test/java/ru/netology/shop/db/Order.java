@@ -36,6 +36,6 @@ public class Order {
     @Step("Проверяем, что заказ внесен в БД корректно, а его статус «{expectedOrder.status}».")
     public void assertCreditOrder(Order expectedOrder) {
         assertEquals(expectedOrder.getStatus(), this.status);
-//        assertNotNull(this.getId());
+        assertNotNull(this.getId());
     }
 }
