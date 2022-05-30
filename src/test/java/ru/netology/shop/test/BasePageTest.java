@@ -103,7 +103,7 @@ public abstract class BasePageTest {
         assertEquals(3, actualFieldMaxLength);
     }
 
-    @DisplayName("Проверка плейсхолдера поля «Номер карты»")
+    @DisplayName("Проверка отображения и значения плейсхолдера поля «Номер карты»")
     @Test
     public void shouldShowValidPlaceholderInNumberField() {
         buyTourPage.inputNumber(null);
@@ -112,7 +112,7 @@ public abstract class BasePageTest {
         assertTrue(actualPlaceholder.matches(Regex.numberPlaceholder));
     }
 
-    @DisplayName("Проверка плейсхолдера поля «Месяц»")
+    @DisplayName("Проверка отображения и значения плейсхолдера поля «Месяц»")
     @Test
     public void shouldShowValidPlaceholderInMonthField() {
         buyTourPage.inputMonth(null);
@@ -121,7 +121,7 @@ public abstract class BasePageTest {
         assertTrue(actualPlaceholder.matches(Regex.monthPlaceholder));
     }
 
-    @DisplayName("Проверка плейсхолдера поля «Год»")
+    @DisplayName("Проверка отображения и значения плейсхолдера поля «Год»")
     @Test
     public void shouldShowValidPlaceholderInYearField() {
         buyTourPage.inputYear(null);
@@ -130,7 +130,7 @@ public abstract class BasePageTest {
         assertTrue(actualPlaceholder.matches(Regex.yearPlaceholder));
     }
 
-    @DisplayName("Проверка плейсхолдера поля «Владелец»")
+    @DisplayName("Проверка отображения и значения плейсхолдера поля «Владелец»")
     @Test
     public void shouldShowValidPlaceholderInHolderField() {
         buyTourPage.inputHolder(null);
@@ -139,7 +139,7 @@ public abstract class BasePageTest {
         assertTrue(actualPlaceholder.matches(Regex.holderPlaceholder));
     }
 
-    @DisplayName("Проверка плейсхолдера поля «CVC/CVV»")
+    @DisplayName("Проверка отображения и значения плейсхолдера поля «CVC/CVV»")
     @Test
     public void shouldShowValidPlaceholderInCodeField() {
         buyTourPage.inputCode(null);
