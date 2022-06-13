@@ -2,6 +2,10 @@ package ru.netology.shop.test;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.TmsLink;
 import io.qameta.allure.selenide.AllureSelenide;
 
 import org.junit.jupiter.api.*;
@@ -65,6 +69,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка допустимой длины поля «Номер карты»")
     @Test
+    @Severity(value = SeverityLevel.MINOR)
+    @TmsLink(value = "ui-27")
     public void shouldLimitInputOfNumberField() {
         var actualFieldMaxLength = buyTourPage.getNumberFieldMaxLength();
 
@@ -73,6 +79,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка допустимой длины поля «Месяц»")
     @Test
+    @Severity(value = SeverityLevel.MINOR)
+    @TmsLink(value = "ui-28")
     public void shouldLimitInputOfMonthField() {
         var actualFieldMaxLength = buyTourPage.getMonthFieldMaxLength();
 
@@ -81,6 +89,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка допустимой длины поля «Год»")
     @Test
+    @Severity(value = SeverityLevel.MINOR)
+    @TmsLink(value = "ui-29")
     public void shouldLimitInputOfYearField() {
         var actualFieldMaxLength = buyTourPage.getYearFieldMaxLength();
 
@@ -89,6 +99,9 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка допустимой длины поля «Владелец»")
     @Test
+    @Severity(value = SeverityLevel.MINOR)
+    @TmsLink(value = "ui-30")
+    @Issue(value = "6")
     public void shouldLimitInputOfHolderField() {
         var actualFieldMaxLength = buyTourPage.getHolderFieldMaxLength();
 
@@ -97,6 +110,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка допустимой длины поля «CVC/CVV»")
     @Test
+    @Severity(value = SeverityLevel.MINOR)
+    @TmsLink(value = "ui-31")
     public void shouldLimitInputOfCodeField() {
         var actualFieldMaxLength = buyTourPage.getCodeFieldMaxLength();
 
@@ -105,6 +120,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Номер карты»")
     @Test
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @TmsLink(value = "ui-32")
     public void shouldShowValidPlaceholderInNumberField() {
         buyTourPage.inputNumber(null);
         var actualPlaceholder = buyTourPage.getNumberFieldPlaceholder();
@@ -114,6 +131,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Месяц»")
     @Test
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @TmsLink(value = "ui-33")
     public void shouldShowValidPlaceholderInMonthField() {
         buyTourPage.inputMonth(null);
         var actualPlaceholder = buyTourPage.getMonthFieldPlaceholder();
@@ -123,6 +142,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Год»")
     @Test
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @TmsLink(value = "ui-34")
     public void shouldShowValidPlaceholderInYearField() {
         buyTourPage.inputYear(null);
         var actualPlaceholder = buyTourPage.getYearFieldPlaceholder();
@@ -132,6 +153,9 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Владелец»")
     @Test
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @TmsLink(value = "ui-35")
+    @Issue(value = "9")
     public void shouldShowValidPlaceholderInHolderField() {
         buyTourPage.inputHolder(null);
         var actualPlaceholder = buyTourPage.getHolderFieldPlaceholder();
@@ -141,6 +165,8 @@ public abstract class BasePageTest {
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «CVC/CVV»")
     @Test
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @TmsLink(value = "ui-36")
     public void shouldShowValidPlaceholderInCodeField() {
         buyTourPage.inputCode(null);
         var actualPlaceholder = buyTourPage.getCodeFieldPlaceholder();
