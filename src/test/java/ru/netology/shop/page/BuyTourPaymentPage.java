@@ -7,6 +7,6 @@ import static ru.netology.shop.page.ElementsTexts.Headings;
 public class BuyTourPaymentPage extends BuyTourPage {
 
     public BuyTourPaymentPage() {
-        heading.shouldBe(visible).shouldHave(text(Headings.payment));
+        heading.shouldBe(visible).shouldHave(text(Headings.PAYMENT));
     }
 }

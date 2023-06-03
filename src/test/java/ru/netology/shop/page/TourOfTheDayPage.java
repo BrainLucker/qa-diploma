@@ -17,26 +17,29 @@ public class TourOfTheDayPage {
     private final SelenideElement StringWithPrice = $$("ul li.list__item").findBy(text("руб."));
 
     public TourOfTheDayPage() {
-        heading.shouldBe(visible).shouldHave(text(Headings.tourOfTheDay));
+        heading.shouldBe(visible)
+                .shouldHave(text(Headings.TOUR_OF_THE_DAY));
     }
 
     public void pressButton(String text) {
         buttons.findBy(text(text)).click();
     }
 
-    public BuyTourPaymentPage clickBuy() {
-        pressButton(Buttons.buy);
+    public BuyTourPaymentPage clickBuyButton() {
+        pressButton(Buttons.BUY);
         return new BuyTourPaymentPage();
     }
 
-    public BuyTourCreditPage clickCredit() {
-        pressButton(Buttons.credit);
+    public BuyTourCreditPage clickCreditButton() {
+        pressButton(Buttons.CREDIT);
         return new BuyTourCreditPage();
     }
 
     public int getTourPrice() {
-        var text = StringWithPrice.text().split("Всего")[1];
-        var price = text.substring(0, text.indexOf("руб.")).replaceAll("\\s","");
+        String text = StringWithPrice.text().split("Всего")[1];
+        var price = text.substring(0, text.indexOf("руб."))
+                .replaceAll("\\s", "");
+
         return Integer.parseInt(price);
     }
 }

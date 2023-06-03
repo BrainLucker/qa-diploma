@@ -31,105 +31,105 @@ public class TestData {
     public static Stream<Arguments> notAllowableMonth() {
         return Stream.of(
                 arguments("меньше допустимого на 1 месяц",
-                        Cards.generateApprovedCardExpiringIn(0, -1), Errors.expiredDate),
+                        Cards.generateApprovedCardExpiringIn(0, -1), Errors.EXPIRED_DATE),
                 arguments("больше допустимого на 1 месяц",
-                        Cards.generateApprovedCardExpiringIn(5, 1), Errors.incorrectExpirationDate)
+                        Cards.generateApprovedCardExpiringIn(5, 1), Errors.INCORRECT_EXPIRATION_DATE)
         );
     }
 
     public static Stream<Arguments> notAllowableYear() {
         return Stream.of(
                 arguments("меньше допустимого на 1 год",
-                        Cards.generateApprovedCardExpiringIn(-1, 0), Errors.expiredDate),
+                        Cards.generateApprovedCardExpiringIn(-1, 0), Errors.EXPIRED_DATE),
                 arguments("больше допустимого на 1 год",
-                        Cards.generateApprovedCardExpiringIn(6, 0), Errors.incorrectExpirationDate)
+                        Cards.generateApprovedCardExpiringIn(6, 0), Errors.INCORRECT_EXPIRATION_DATE)
         );
     }
 
     public static Stream<Arguments> invalidCardNumber() {
         return Stream.of(
                 arguments("неверный формат",
-                        Cards.generateCardAndSetNumber("1111 1111 1111 1111"), Errors.incorrectFormat),
+                        Cards.generateCardAndSetNumber("1111 1111 1111 1111"), Errors.INCORRECT_FORMAT),
                 arguments("15 цифр",
-                        Cards.generateCardAndSetNumber("4444 4444 4444 444"), Errors.incorrectFormat),
+                        Cards.generateCardAndSetNumber("4444 4444 4444 444"), Errors.INCORRECT_FORMAT),
                 arguments("буквы",
-                        Cards.generateCardAndSetNumber("Look like card nmbr"), Errors.emptyField),
+                        Cards.generateCardAndSetNumber("Look like card nmbr"), Errors.EMPTY_FIELD),
                 arguments("спец. символы",
-                        Cards.generateCardAndSetNumber(".... ,,,, **** ----"), Errors.emptyField),
+                        Cards.generateCardAndSetNumber(".... ,,,, **** ----"), Errors.EMPTY_FIELD),
                 arguments("пробелы",
-                        Cards.generateCardAndSetNumber("                "), Errors.emptyField),
+                        Cards.generateCardAndSetNumber("                "), Errors.EMPTY_FIELD),
                 arguments("пустое поле",
-                        Cards.generateCardAndSetNumber(""), Errors.emptyField)
+                        Cards.generateCardAndSetNumber(""), Errors.EMPTY_FIELD)
         );
     }
 
     public static Stream<Arguments> invalidMonth() {
         return Stream.of(
                 arguments("00",
-                        Cards.generateCardAndSetMonth("00"), Errors.incorrectExpirationDate),
+                        Cards.generateCardAndSetMonth("00"), Errors.INCORRECT_EXPIRATION_DATE),
                 arguments("13",
-                        Cards.generateCardAndSetMonth("13"), Errors.incorrectExpirationDate),
+                        Cards.generateCardAndSetMonth("13"), Errors.INCORRECT_EXPIRATION_DATE),
                 arguments("1 цифра",
-                        Cards.generateCardAndSetMonth("1"), Errors.incorrectFormat),
+                        Cards.generateCardAndSetMonth("1"), Errors.INCORRECT_FORMAT),
                 arguments("буквы",
-                        Cards.generateCardAndSetMonth("mo"), Errors.emptyField),
+                        Cards.generateCardAndSetMonth("mo"), Errors.EMPTY_FIELD),
                 arguments("спец. символы",
-                        Cards.generateCardAndSetMonth(".,"), Errors.emptyField),
+                        Cards.generateCardAndSetMonth(".,"), Errors.EMPTY_FIELD),
                 arguments("пробелы",
-                        Cards.generateCardAndSetMonth("  "), Errors.emptyField),
+                        Cards.generateCardAndSetMonth("  "), Errors.EMPTY_FIELD),
                 arguments("пустое поле",
-                        Cards.generateCardAndSetMonth(""), Errors.emptyField)
+                        Cards.generateCardAndSetMonth(""), Errors.EMPTY_FIELD)
         );
     }
 
     public static Stream<Arguments> invalidYear() {
         return Stream.of(
                 arguments("00",
-                        Cards.generateCardAndSetYear("00"), Errors.expiredDate),
+                        Cards.generateCardAndSetYear("00"), Errors.EXPIRED_DATE),
                 arguments("99",
-                        Cards.generateCardAndSetYear("99"), Errors.incorrectExpirationDate),
+                        Cards.generateCardAndSetYear("99"), Errors.INCORRECT_EXPIRATION_DATE),
                 arguments("1 цифра",
-                        Cards.generateCardAndSetYear("1"), Errors.incorrectFormat),
+                        Cards.generateCardAndSetYear("1"), Errors.INCORRECT_FORMAT),
                 arguments("буквы",
-                        Cards.generateCardAndSetYear("ye"), Errors.emptyField),
+                        Cards.generateCardAndSetYear("ye"), Errors.EMPTY_FIELD),
                 arguments("спец. символы",
-                        Cards.generateCardAndSetYear(".,"), Errors.emptyField),
+                        Cards.generateCardAndSetYear(".,"), Errors.EMPTY_FIELD),
                 arguments("пробелы",
-                        Cards.generateCardAndSetYear("  "), Errors.emptyField),
+                        Cards.generateCardAndSetYear("  "), Errors.EMPTY_FIELD),
                 arguments("пустое поле",
-                        Cards.generateCardAndSetYear(""), Errors.emptyField)
+                        Cards.generateCardAndSetYear(""), Errors.EMPTY_FIELD)
         );
     }
 
     public static Stream<Arguments> invalidHolderName() {
         return Stream.of(
                 arguments("1 буква",
-                        Cards.generateCardAndSetHolder("A"), Errors.incorrectFormat),
+                        Cards.generateCardAndSetHolder("A"), Errors.INCORRECT_FORMAT),
                 arguments("кириллица",
-                        Cards.generateCardAndSetHolder("Имя Владельца"), Errors.emptyField),
+                        Cards.generateCardAndSetHolder("Имя Владельца"), Errors.EMPTY_FIELD),
                 arguments("цифры",
-                        Cards.generateCardAndSetHolder("1234567890"), Errors.emptyField),
+                        Cards.generateCardAndSetHolder("1234567890"), Errors.EMPTY_FIELD),
                 arguments("спец. символы",
-                        Cards.generateCardAndSetHolder("!@#$%^&№;%:?*()-+/\\"), Errors.emptyField),
+                        Cards.generateCardAndSetHolder("!@#$%^&№;%:?*()-+/\\"), Errors.EMPTY_FIELD),
                 arguments("пробелы",
-                        Cards.generateCardAndSetHolder("     "), Errors.emptyField),
+                        Cards.generateCardAndSetHolder("     "), Errors.EMPTY_FIELD),
                 arguments("пустое поле",
-                        Cards.generateCardAndSetHolder(""), Errors.emptyField)
+                        Cards.generateCardAndSetHolder(""), Errors.EMPTY_FIELD)
         );
     }
 
     public static Stream<Arguments> invalidCode() {
         return Stream.of(
                 arguments("2 цифры",
-                        Cards.generateCardAndSetCode("12"), Errors.incorrectFormat),
+                        Cards.generateCardAndSetCode("12"), Errors.INCORRECT_FORMAT),
                 arguments("буквы",
-                        Cards.generateCardAndSetCode("xyz"), Errors.emptyField),
+                        Cards.generateCardAndSetCode("xyz"), Errors.EMPTY_FIELD),
                 arguments("спец. символы",
-                        Cards.generateCardAndSetCode(".,-"), Errors.emptyField),
+                        Cards.generateCardAndSetCode(".,-"), Errors.EMPTY_FIELD),
                 arguments("пробелы",
-                        Cards.generateCardAndSetCode("   "), Errors.emptyField),
+                        Cards.generateCardAndSetCode("   "), Errors.EMPTY_FIELD),
                 arguments("пустое поле",
-                        Cards.generateCardAndSetCode(""), Errors.emptyField)
+                        Cards.generateCardAndSetCode(""), Errors.EMPTY_FIELD)
         );
     }
 

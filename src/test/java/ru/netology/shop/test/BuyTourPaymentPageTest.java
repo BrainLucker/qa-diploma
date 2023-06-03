@@ -18,7 +18,7 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     public void getPrice() {
         setup();
         price = tourOfTheDayPage.getTourPrice();
-        buyTourPage = tourOfTheDayPage.clickBuy();
+        buyTourPage = tourOfTheDayPage.clickBuyButton();
     }
 
     @ParameterizedTest(name = "Покупка тура по «APPROVED» карте с валидным реквизитами: {0}")
@@ -27,13 +27,14 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @TmsLinks({@TmsLink(value = "ui-01"), @TmsLink(value = "ui-03")})
     @Override
     public void shouldBuyTourIfValidCardInfo(String testName, CardInfo card) {
-        var expectedOrder = new Order("APPROVED", price);
+        Order expectedOrder = new Order("APPROVED", price);
 
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsLoading()
+                .checkSuccessNotification(15);
+        Order actualOrder = db.getPaymentOrder();
 
-        buyTourPage.checkButtonIsLoading();
-        buyTourPage.checkSuccessNotification(15);
-        var actualOrder = db.getPaymentOrder();
         actualOrder.assertPaymentOrder(expectedOrder);
     }
 
@@ -43,8 +44,8 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @TmsLink(value = "ui-05")
     @Override
     public void shouldChangePageIfClickButton() {
-        tourOfTheDayPage.clickBuy();
-        tourOfTheDayPage.clickCredit();
+        tourOfTheDayPage.clickBuyButton();
+        tourOfTheDayPage.clickCreditButton();
     }
 
     @DisplayName("Покупка тура по «DECLINED» карте с валидными реквизитами")
@@ -54,14 +55,15 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issue(value = "2")
     @Override
     public void shouldShowErrorIfValidDeclinedCard() {
-        var card = Cards.generateValidDeclinedCard();
-        var expectedOrder = new Order("DECLINED", price);
+        CardInfo card = Cards.generateValidDeclinedCard();
+        Order expectedOrder = new Order("DECLINED", price);
 
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsLoading()
+                .checkErrorNotification(15);
+        Order actualOrder = db.getPaymentOrder();
 
-        buyTourPage.checkButtonIsLoading();
-        buyTourPage.checkErrorNotification(15);
-        var actualOrder = db.getPaymentOrder();
         actualOrder.assertPaymentOrder(expectedOrder);
     }
 
@@ -72,10 +74,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issue(value = "11")
     @Override
     public void shouldShowErrorIfInputtedMonthIsNotAllowable(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkMonthFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkMonthFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -85,10 +88,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @TmsLink(value = "ui-09")
     @Override
     public void shouldShowErrorIfInputtedYearIsNotAllowable(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkYearFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkYearFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -99,10 +103,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issues({@Issue(value = "15"), @Issue(value = "10")})
     @Override
     public void shouldShowErrorIfInputtedInvalidNumber(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkNumberFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkNumberFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -113,10 +118,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issues({@Issue(value = "12"), @Issue(value = "10")})
     @Override
     public void shouldShowErrorIfInputtedInvalidMonth(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkMonthFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkMonthFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -127,10 +133,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issue(value = "10")
     @Override
     public void shouldShowErrorIfInputtedInvalidYear(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkYearFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkYearFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -141,10 +148,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issue(value = "5")
     @Override
     public void shouldShowErrorIfInputtedInvalidHolder(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkHolderFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkHolderFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -155,10 +163,11 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issues({@Issue(value = "4"), @Issue(value = "10")})
     @Override
     public void shouldShowErrorIfInputtedInvalidCode(String testName, CardInfo card, String errorText) {
-        buyTourPage.inputCardInfoAndClickContinue(card);
+        buyTourPage.inputCardInfo(card)
+                .clickContinueButton()
+                .checkButtonIsNormal()
+                .checkCodeFieldError(errorText);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkCodeFieldError(errorText);
         assertNull(db.getPaymentOrderId());
     }
 
@@ -169,14 +178,14 @@ public class BuyTourPaymentPageTest extends BasePageTest {
     @Issue(value = "10")
     @Override
     public void shouldShowErrorIfSendEmptyForm() {
-        buyTourPage.clickContinueButton();
+        buyTourPage.clickContinueButton()
+                .checkButtonIsNormal()
+                .checkNumberFieldError(Errors.EMPTY_FIELD)
+                .checkMonthFieldError(Errors.EMPTY_FIELD)
+                .checkYearFieldError(Errors.EMPTY_FIELD)
+                .checkHolderFieldError(Errors.EMPTY_FIELD)
+                .checkCodeFieldError(Errors.EMPTY_FIELD);
 
-        buyTourPage.checkButtonIsNormal();
-        buyTourPage.checkNumberFieldError(Errors.emptyField);
-        buyTourPage.checkMonthFieldError(Errors.emptyField);
-        buyTourPage.checkYearFieldError(Errors.emptyField);
-        buyTourPage.checkHolderFieldError(Errors.emptyField);
-        buyTourPage.checkCodeFieldError(Errors.emptyField);
         assertNull(db.getPaymentOrderId());
     }
 }
