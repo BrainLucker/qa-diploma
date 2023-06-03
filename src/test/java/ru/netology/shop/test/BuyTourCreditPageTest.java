@@ -186,4 +186,5 @@ public class BuyTourCreditPageTest extends BasePageTest {
 
         assertNull(db.getCreditOrderId());
     }
+
 }

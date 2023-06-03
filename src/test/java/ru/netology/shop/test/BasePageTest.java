@@ -72,7 +72,7 @@ public abstract class BasePageTest {
     @Severity(value = SeverityLevel.MINOR)
     @TmsLink(value = "ui-27")
     public void shouldLimitInputOfNumberField() {
-        var actualFieldMaxLength = buyTourPage.getNumberFieldMaxLength();
+        int actualFieldMaxLength = buyTourPage.getNumberFieldMaxLength();
 
         assertEquals(19, actualFieldMaxLength);
     }
@@ -82,7 +82,7 @@ public abstract class BasePageTest {
     @Severity(value = SeverityLevel.MINOR)
     @TmsLink(value = "ui-28")
     public void shouldLimitInputOfMonthField() {
-        var actualFieldMaxLength = buyTourPage.getMonthFieldMaxLength();
+        int actualFieldMaxLength = buyTourPage.getMonthFieldMaxLength();
 
         assertEquals(2, actualFieldMaxLength);
     }
@@ -92,7 +92,7 @@ public abstract class BasePageTest {
     @Severity(value = SeverityLevel.MINOR)
     @TmsLink(value = "ui-29")
     public void shouldLimitInputOfYearField() {
-        var actualFieldMaxLength = buyTourPage.getYearFieldMaxLength();
+        int actualFieldMaxLength = buyTourPage.getYearFieldMaxLength();
 
         assertEquals(2, actualFieldMaxLength);
     }
@@ -103,7 +103,7 @@ public abstract class BasePageTest {
     @TmsLink(value = "ui-30")
     @Issue(value = "6")
     public void shouldLimitInputOfHolderField() {
-        var actualFieldMaxLength = buyTourPage.getHolderFieldMaxLength();
+        int actualFieldMaxLength = buyTourPage.getHolderFieldMaxLength();
 
         assertEquals(27, actualFieldMaxLength);
     }
@@ -113,7 +113,7 @@ public abstract class BasePageTest {
     @Severity(value = SeverityLevel.MINOR)
     @TmsLink(value = "ui-31")
     public void shouldLimitInputOfCodeField() {
-        var actualFieldMaxLength = buyTourPage.getCodeFieldMaxLength();
+        int actualFieldMaxLength = buyTourPage.getCodeFieldMaxLength();
 
         assertEquals(3, actualFieldMaxLength);
     }
@@ -124,9 +124,9 @@ public abstract class BasePageTest {
     @TmsLink(value = "ui-32")
     public void shouldShowValidPlaceholderInNumberField() {
         buyTourPage.inputNumber(null);
-        var actualPlaceholder = buyTourPage.getNumberFieldPlaceholder();
+        String actualPlaceholder = buyTourPage.getNumberFieldPlaceholder();
 
-        assertTrue(actualPlaceholder.matches(Regex.numberPlaceholder));
+        assertTrue(actualPlaceholder.matches(Regex.NUMBER_PLACEHOLDER));
     }
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Месяц»")
@@ -135,9 +135,9 @@ public abstract class BasePageTest {
     @TmsLink(value = "ui-33")
     public void shouldShowValidPlaceholderInMonthField() {
         buyTourPage.inputMonth(null);
-        var actualPlaceholder = buyTourPage.getMonthFieldPlaceholder();
+        String actualPlaceholder = buyTourPage.getMonthFieldPlaceholder();
 
-        assertTrue(actualPlaceholder.matches(Regex.monthPlaceholder));
+        assertTrue(actualPlaceholder.matches(Regex.MONTH_PLACEHOLDER));
     }
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Год»")
@@ -146,9 +146,9 @@ public abstract class BasePageTest {
     @TmsLink(value = "ui-34")
     public void shouldShowValidPlaceholderInYearField() {
         buyTourPage.inputYear(null);
-        var actualPlaceholder = buyTourPage.getYearFieldPlaceholder();
+        String actualPlaceholder = buyTourPage.getYearFieldPlaceholder();
 
-        assertTrue(actualPlaceholder.matches(Regex.yearPlaceholder));
+        assertTrue(actualPlaceholder.matches(Regex.YEAR_PLACEHOLDER));
     }
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «Владелец»")
@@ -158,9 +158,9 @@ public abstract class BasePageTest {
     @Issue(value = "9")
     public void shouldShowValidPlaceholderInHolderField() {
         buyTourPage.inputHolder(null);
-        var actualPlaceholder = buyTourPage.getHolderFieldPlaceholder();
+        String actualPlaceholder = buyTourPage.getHolderFieldPlaceholder();
 
-        assertTrue(actualPlaceholder.matches(Regex.holderPlaceholder));
+        assertTrue(actualPlaceholder.matches(Regex.HOLDER_PLACEHOLDER));
     }
 
     @DisplayName("Проверка отображения и значения плейсхолдера поля «CVC/CVV»")
@@ -169,8 +169,8 @@ public abstract class BasePageTest {
     @TmsLink(value = "ui-36")
     public void shouldShowValidPlaceholderInCodeField() {
         buyTourPage.inputCode(null);
-        var actualPlaceholder = buyTourPage.getCodeFieldPlaceholder();
+        String actualPlaceholder = buyTourPage.getCodeFieldPlaceholder();
 
-        assertTrue(actualPlaceholder.matches(Regex.codePlaceholder));
+        assertTrue(actualPlaceholder.matches(Regex.CODE_PLACEHOLDER));
     }
 }

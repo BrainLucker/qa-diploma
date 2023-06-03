@@ -88,7 +88,6 @@ public class BuyTourPage {
     /**
      * Проверка отсутствие иконки загрузки
      *
-     * @return
      */
     @Step("Проверяем отсутствие иконки загрузки и неизменность текста кнопки")
     public BuyTourPage checkButtonIsNormal() {
@@ -159,6 +158,7 @@ public class BuyTourPage {
         String maxLength = field.$("input.input__control")
                 .shouldHave(attribute("maxlength"), Duration.ofMillis(10))
                 .getAttribute("maxlength");
+
         return Integer.parseInt(maxLength);
     }
 
@@ -191,6 +191,7 @@ public class BuyTourPage {
         String placeholder = field.$("input.input__control")
                 .shouldBe(visible, Duration.ofMillis(20))
                 .getAttribute("placeholder");
+
         return placeholder;
     }
 

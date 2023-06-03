@@ -24,9 +24,9 @@ public class DataGenerator {
     }
 
     public static LocalDate generateValidCardDate() {
-        var minDay = getDate(0, 0).toEpochDay();
-        var maxDay = getDate(4, 0).minusMonths(1).toEpochDay();
-        var randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        long minDay = getDate(0, 0).toEpochDay();
+        long maxDay = getDate(4, 0).minusMonths(1).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
 
@@ -39,14 +39,12 @@ public class DataGenerator {
     }
 
     public static String generateHolder() {
-        var faker = new Faker(new Locale("en"));
-        var randomFirstName = faker.name().firstName();
-        var randomLastName = faker.name().lastName();
-        return randomFirstName + " " + randomLastName;
+        Faker faker = new Faker(new Locale("en"));
+        return faker.name().firstName() + " " + faker.name().lastName();
     }
 
     public static String generateCode() {
-        var faker = new Faker();
+        Faker faker = new Faker();
         return faker.number().digits(3);
     }
 
@@ -105,4 +103,5 @@ public class DataGenerator {
         String holder;
         String cvc;
     }
+
 }

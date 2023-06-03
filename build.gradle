@@ -44,15 +44,16 @@ test {
 //  Параметры для подключения к API
     systemProperty 'api.url', System.getProperty('api.url', 'http://localhost/api/v1/')
     systemProperty 'api.port', System.getProperty('api.port', "8080")
+    systemProperty 'api.payment_gate_path', System.getProperty('api.payment_gate_path', "/pay")
+    systemProperty 'api.credit_gate_path', System.getProperty('api.credit_gate_path', "/credit")
 
 //  Параметры для подключения к DB
     systemProperty 'db.user', System.getProperty('db.user', 'admin')
     systemProperty 'db.password', System.getProperty('db.password', 'pass')
     systemProperty 'db.url', System.getProperty('db.url')
-//  Для запуска тестов с подключением к одной из БД по-умолчанию
-//  необходимо раскомментировать соответствующую строку ниже:
-//    1. MySQL
-//    systemProperty 'db.url', System.getProperty('db.url', 'jdbc:mysql://localhost:3306/app')
-//    2. PostgreSQL
-//    systemProperty 'db.url', System.getProperty('db.url', 'jdbc:postgresql://localhost:5432/app')
+
+//  Для запуска тестов с подключением к одной из БД по-умолчанию раскомментировать соответствующую строку ниже:
+//    systemProperty 'db.url', System.getProperty('db.url', 'jdbc:mysql://localhost:3306/app')      // MySQL
+//    systemProperty 'db.url', System.getProperty('db.url', 'jdbc:postgresql://localhost:5432/app') // PostgreSQL
+
 }

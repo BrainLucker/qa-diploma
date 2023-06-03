@@ -39,4 +39,5 @@ public class ElementsTexts {
         public static final String INCORRECT_EXPIRATION_DATE = "Неверно указан срок действия карты";
         public static final String EXPIRED_DATE = "Истёк срок действия карты";
     }
+
 }
